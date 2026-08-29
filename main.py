@@ -14,47 +14,84 @@ class Axis_Bank:
 
         #This loop is for first operation
         if data=="1":
-            print("Fetching you info please wait:")
-            time.sleep(2)
-            print(f"The name of Account Holder is {self.name} and the balance is {self.balance}:")
-            print("*" * 80)
+            count=3
+            while count>0:
+                passw=input("Please enter your Password :")
+                if passw=="Ankush":
+                    print("Fetching you info please wait:")
+                    time.sleep(2)
+                    print(f"The name of Account Holder is {self.name} and the balance is {self.balance}:")
+                    print("*" * 80)
+                    break
+                else:
+                    count-=1
+                    print("Incorrect Password:")
+                    
+                print(f"Attempts left: {count}")
+                if count==0:
+                    print("Now try after 24 hours")
+                    break
 
         #this loop is for second option    
         elif data=="2":
             try:
-                amount=int(input("Enter how much amount you want to debit:"))
-                if amount>0 and amount<=self.balance:
-                    self.balance -= amount
-                    time.sleep(2)
-                    print("Money debit successfully:")
-                    print("*" * 80)
-                elif amount<0:
-                    print("you cannot debit less then 0: ")
-                else:
-                    print("Insufficient balance:")
+                count=3
+                while count>0:
+                    passw=input("Please enter your Password :")
+                    if passw=="Ankush":
+                        amount=int(input("Enter how much amount you want to debit:"))
+                        if amount>0 and amount<=self.balance:
+                            self.balance -= amount
+                            time.sleep(2)
+                            print("Money debit successfully:")
+                            print("*" * 80)
+                        elif amount<0:
+                            print("you cannot debit less then 0: ")
+                        else:
+                            print("Insufficient balance:")
+                        break
+                    else:
+                        count-=1
+                        print("Incorrect Password:")
+                    attem=print(f"Attempts left: {count}")
+                    if count==0:
+                        print("Now try after 24 hours")
+                        break
             except ValueError:
                 print("Please enter a valid number: ")
                 
         #This loop is for third option
         elif data=="3":
             try:
-                amount_=int(input("Enter how much amount you want to credit in your account:"))
-                print("Please wait:")
-                if amount_>0:
-                    self.balance+=amount_
-                    time.sleep(2)
-                    print("Money credit successfully:")
-                    print("*" * 80)
-                else:
-                    print("Cannot add less then Zero: ")
-                
+                count=3
+                while count>0:
+                    passw=input("Please enter your Password :")
+                    if passw=="Ankush":
+                        amount_=int(input("Enter how much amount you want to credit in your account:"))
+                        print("Please wait:")
+                        if amount_>0:
+                            self.balance+=amount_
+                            time.sleep(2)
+                            print("Money credit successfully:")
+                            print("*" * 80)
+                        else:
+                            print("Cannot add less then Zero: ")
+                        break
+
+                    else:
+                        count-=1
+                        print("Incorrect Password:")
+                    attem=print(f"Attempts left: {count}")
+                    
+                    if count==0:
+                        print("Now try after 24 hours")
+                        break
             except ValueError:
-                print("Please enter a valid number: ")
-                
+                print("Please enter a valid number: ")      
         else:
             print("Select options from above Three: ")
 
-c=Axis_Bank("ankush")
+c=Axis_Bank("Ankush")
 
 while True:
     one=input("press any key to continue or press 'q' for quit:")
