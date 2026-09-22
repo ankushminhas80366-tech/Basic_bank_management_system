@@ -1,101 +1,100 @@
 import time
 class Axis_Bank:
 
-    def __init__(self,name,balance=0):
-        self.name=name
-        self.balance=balance
+    def __init__(self):
+        self.dic=[{"name":"Ankush","balance":10000,"acc":123456},
+                  {"name":"Rohit","balance":20000,"acc":789012}]
 
-    #This function for select operation to do
+    def get_account(self,acc_):
+        for user in self.dic:
+            if user["acc"]==acc_:
+                return user
+
     def main(self):
         print("-" * 80)
-        print("1: 'For check your bank details'")
-        print("2: 'For Debit/Withdrawl money'")
-        print("3: 'For Credit/Deposit money in your account'")
-        print("4: 'For Feedback'")
+        print("Welcome to Axis Bank:\n")
+        print("1: 'For create an account'")
+        print("2: 'For check your bank details'")
+        print("3: 'For Debit/Withdrawl money'")
+        print("4: 'For Credit/Deposit money in your account'")
+        print("5: 'For Feedback'")
         print("-" * 80)
-        data=input("Enter which operation you want to perform:\n")
+        data=input("Enter which operation you want to perform:")
 
-        #This loop is for first operation
         if data=="1":
-            count=3
-            while count>0:
-                passw=input("Please enter your Password :")
-                if passw=="Ankush":
-                    print("Fetching you info please wait:\n")
-                    time.sleep(2)
-                    print("-" * 80)
-                    print(f"The name of Account Holder is {self.name} and the balance is {self.balance}:")
-                    print("-" * 80)
-                    break
-                else:
-                    count-=1
-                    print("Incorrect Password:")
-                    
-                print(f"Attempts left: {count}")
-                if count==0:
-                    print("Now try after 24 hours")
-                    break
-
-        #this loop is for second option    
-        elif data=="2":
             try:
-                count=3
-                while count>0:
-                    passw=input("Please enter your Password :")
-                    if passw=="Ankush":
-                        amount=int(input("Enter how much amount you want to debit:"))
-                        if amount>0 and amount<=self.balance:
-                            self.balance -= amount
-                            time.sleep(2)
-                            print("-" * 80)
-                            print("Money debit successfully:")
-                            print("-" * 80)
-                        elif amount<0:
-                            print("you cannot debit less then 0: \n")
-                        else:
-                            print("Insufficient balance:\n")
-                        break
-                    else:
-                        count-=1
-                        print("Incorrect Password:\n")
-                    attem=print(f"Attempts left: {count}")
-                    if count==0:
-                        print("Now try after 24 hours")
-                        break
-            except ValueError:
-                print("Please enter a valid number: \n")
+                def update_dict(**kwargs):
+                    self.dic.append(kwargs)
+                input_=int(input("Enter your account number:"))
+                input_name=input("Enter your name:")
+                balance_=int(input("Enter your balance:"))
                 
-        #This loop is for third option
-        elif data=="3":
-            try:
+                if input_ not in [user["acc"] for user in self.dic]:
+                    update_dict(name=input_name,balance=balance_,acc=input_)
+                    print("Account created successfully:")
+                    print(self.dic)
+                else:
+                    print("This account already exists:")
+            except ValueError as e:
+                print(f"Error: {e}")
+
+        elif data in ["2","3","4"]:
+            try: 
+                input_=int(input("Enter your acc no. to login:"))
+                current_user=self.get_account(input_)
+
+                if not current_user:
+                    print("Account not found. Please check your account number.")
+                    return
                 count=3
                 while count>0:
-                    passw=input("Please enter your Password :")
-                    if passw=="Ankush":
-                        amount_=int(input("Enter how much amount you want to credit in your account:"))
-                        print("Please wait:\n")
-                        if amount_>0:
-                            self.balance+=amount_
-                            time.sleep(2)
-                            print("-" * 80)
-                            print("Money credit successfully:\n")
-                            print("-" * 80)
-                        else:
-                            print("Cannot add less then Zero: \n")
+                    passw=input(f"Please enter your (Name) for account {input_}:")
+                    if passw==current_user["name"]:
                         break
-
                     else:
                         count-=1
-                        print("Incorrect Password:\n")
-                    attem=print(f"Attempts left: {count}")
-                    
+                        print("Incorrect Password:")
+                        
+                    print(f"Attempts left: {count}")
                     if count==0:
                         print("Now try after 24 hours")
-                        break
-            except ValueError:
-                print("Please enter a valid number: \n")  
+                        return
 
-        elif data=="4":
+                if data=="2":
+                    print("Fetching your info please wait...\n")
+                    time.sleep(1)
+                    print("-" * 80)
+                    print(f"Account Holder: {current_user['name']} | Balance: {current_user['balance']} | Account Number: {current_user['acc']}")
+                    print("-" * 80)
+
+                elif data=="3":
+                    amount=int(input("Enter how much amount you want to debit:"))
+                    if amount>0 and amount<=current_user["balance"]:
+                        current_user["balance"]-=amount
+                        time.sleep(2)
+                        print("-" * 80)
+                        print(f"Money debit successfully:,New Balance={current_user['balance']}")
+                        print("-" * 80)
+                    elif amount<0:
+                        print("you cannot debit less then 0: \n")
+                    else:
+                        print("Insufficient balance:\n")
+
+                elif data=="4":
+                    amount_=int(input("Enter how much amount you want to credit in your account:"))
+                    print("Please wait:")
+                    if amount_>0:
+                        current_user["balance"]+=amount_
+                        time.sleep(2)
+                        print("-" * 80)
+                        print(f"Money credit successfully:,New Balance={current_user['balance']}")
+                        print("-" * 80)
+                    else:
+                        print("Cannot add less then Zero: \n")
+            except ValueError as e:
+                print(f"Error: {e}\n")
+            
+        elif data=="5":
             try:
                 new=input("How much you are satisfied with our services\na: 'Very Satisfied'\nb: 'Satisfied'\nc: 'Not Satisfied'")
                 if new=="a" or new=="b" or new=="c":
@@ -105,7 +104,7 @@ class Axis_Bank:
         else:
             print("Select options from above Three: \n")
 
-c=Axis_Bank("Ankush")
+c=Axis_Bank()
 
 while True:
     one=input("press any key to continue or press 'q' for quit:")
