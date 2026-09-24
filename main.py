@@ -32,7 +32,9 @@ class Axis_Bank:
                 if input_ not in [user["acc"] for user in self.dic]:
                     update_dict(name=input_name,balance=balance_,acc=input_)
                     print("Account created successfully:")
-                    print(self.dic)
+                    for user in self.dic:
+                        if user["acc"]==input_:    
+                            print(f"{user['name']} | Balance: {user['balance']} | Account Number: {user['acc']}")
                 else:
                     print("This account already exists:")
             except ValueError as e:
@@ -102,7 +104,7 @@ class Axis_Bank:
             except Exception as e:
                 print(f"Error: {e}\n")
         else:
-            print("Select options from above Three: \n")
+            print("Select options from above 5: \n")
 
 c=Axis_Bank()
 
